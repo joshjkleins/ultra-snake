@@ -1,5 +1,6 @@
 extends Node2D
 
+var save_path = "res://variable.save"
 var astar_grid
 @onready var player = $Player
 @onready var game_over = $CanvasLayer/GameOver
@@ -8,7 +9,9 @@ var astar_grid
 @onready var border = $Border
 @onready var win_screen = $CanvasLayer/WinScreen
 @onready var camera = $Camera2D
+@onready var pause_menu: Control = $CanvasLayer/PauseMenu
 
+var highScore
 
 var beanXPos = []
 var beanYPos = []
@@ -18,21 +21,23 @@ var gridOffset = Vector2(8, 8)
 
 var bean = preload("res://scenes/bean.tscn")
 var explosion = preload("res://scenes/explosion.tscn")
+var explosion2 = preload("res://scenes/explosion2.tscn")
 
 var gameOver = false
 @export var gridWidth = 15
 @export var gridHeight = 40
 var maxScore = gridWidth * gridHeight
 
-
+var explosionAmount = 3
 
 #TODO
-#persistent score
-#camera to get game in middle of screen (find center of grid and focus camera on that? idk)
-#better particles
+#Levels (3 levels, target score to beat level, unlocked status, level select screen)
+#Additional concepts (roguelike? arcade? upgrades?)
+#different types of snakes(powers for each specific snake?)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	getHighScore()
 	#create grid
 	astar_grid = AStarGrid2D.new()
 	astar_grid.region = Rect2i(0, 0, gridWidth, gridHeight)
@@ -52,8 +57,8 @@ func _ready():
 
 func _process(_delta):
 	#Pausing functionality
-	if Input.is_action_just_pressed("menu"):
-		if game_over.visible:
+	if Input.is_action_just_pressed("menu") and !gameOver:
+		if pause_menu.visible:
 			unpauseGame()
 		else:
 			pauseGame()
@@ -93,10 +98,12 @@ func spawnBean():
 	beans.call_deferred("add_child", newBean)
 
 func beanPickedUp(location):
-	var newExplosion = explosion.instantiate()
+	var newExplosion = explosion2.instantiate()
 	newExplosion.position = location
 	add_child(newExplosion)
-	newExplosion.emitting = true
+	#newExplosion.emitting = true
+	explosionAmount += 3
+	newExplosion.explode(explosionAmount)
 	player.growSnake()
 	score.addScore()
 	if score.score >= maxScore:
@@ -112,14 +119,16 @@ func win():
 
 func pauseGame():
 	player.process_mode = PROCESS_MODE_DISABLED
-	game_over.visible = true
+	pause_menu.visible = true
 
 func unpauseGame():
 	if !gameOver:
 		player.process_mode = PROCESS_MODE_INHERIT #disable player(snake) process functionality
-		game_over.visible = false
+		pause_menu.visible = false
 
 func showGameOver():
+	
+	save()
 	gameOver = true
 	game_over.visible = true
 
@@ -134,3 +143,22 @@ func restart():
 	score.resetScore()
 	spawnBean()
 	unpauseGame()
+
+func save():
+	if score.score > highScore:
+		var file = FileAccess.open(save_path, FileAccess.WRITE)
+		var saveData = {
+			"Score": score.score
+		}
+		file.store_var(saveData)
+		file.close()
+
+func load_data():
+	if FileAccess.file_exists(save_path):
+		var file = FileAccess.open(save_path, FileAccess.READ)
+		var saveData = file.get_var()
+		highScore = saveData.Score
+		file.close()
+
+func getHighScore():
+	load_data()

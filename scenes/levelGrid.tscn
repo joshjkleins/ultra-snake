@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bjepjb07frqlm"]
+[gd_scene load_steps=7 format=3 uid="uid://bjepjb07frqlm"]
 
 [ext_resource type="Script" path="res://scripts/levelGrid.gd" id="1_gieju"]
 [ext_resource type="PackedScene" uid="uid://bv42pw8if4uek" path="res://scenes/player.tscn" id="2_agswa"]
 [ext_resource type="PackedScene" uid="uid://efng7n2os53p" path="res://scenes/game_over.tscn" id="3_pnatq"]
 [ext_resource type="PackedScene" uid="uid://bv4yo2i22xkdj" path="res://scenes/score.tscn" id="4_crv1m"]
 [ext_resource type="PackedScene" uid="uid://b3cplhwjyivfa" path="res://scenes/win_screen.tscn" id="5_op0bc"]
+[ext_resource type="PackedScene" uid="uid://bcadbvv5h1f2f" path="res://scenes/pauseMenu.tscn" id="6_tskce"]
 
 [node name="LevelGrid" type="Node2D"]
 script = ExtResource("1_gieju")
@@ -30,4 +31,7 @@ anchor_mode = 0
 visible = false
 
 [node name="WinScreen" parent="CanvasLayer" instance=ExtResource("5_op0bc")]
+visible = false
+
+[node name="PauseMenu" parent="CanvasLayer" instance=ExtResource("6_tskce")]
 visible = false
