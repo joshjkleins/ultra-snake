@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://c3rjomtek4im3"]
+
+[ext_resource type="Texture2D" uid="uid://c55fo4myq54pe" path="res://sprites/snake.png" id="2_djker"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k7ckm"]
+size = Vector2(16, 16)
+
+[node name="Snake" type="Node2D"]
+scale = Vector2(0.8, 0.8)
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_djker")
+
+[node name="MoveTimer" type="Timer" parent="."]
+wait_time = 0.1
+autostart = true
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_k7ckm")
+
+[connection signal="timeout" from="MoveTimer" to="." method="_on_move_timer_timeout"]

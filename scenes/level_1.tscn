@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqs6ryv126mfi"]
+
+[ext_resource type="PackedScene" uid="uid://bjepjb07frqlm" path="res://scenes/levelGrid.tscn" id="1_bigyj"]
+[ext_resource type="PackedScene" uid="uid://bv42pw8if4uek" path="res://scenes/player.tscn" id="2_una0c"]
+
+[node name="Level1" type="Node2D"]
+
+[node name="Camera2D2" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="LevelGrid" parent="." instance=ExtResource("1_bigyj")]
+
+[node name="Player" parent="." instance=ExtResource("2_una0c")]

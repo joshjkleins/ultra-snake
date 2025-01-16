@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://bjepjb07frqlm"]
+
+[ext_resource type="Script" path="res://scripts/levelGrid.gd" id="1_gieju"]
+[ext_resource type="PackedScene" uid="uid://bv42pw8if4uek" path="res://scenes/player.tscn" id="2_agswa"]
+[ext_resource type="PackedScene" uid="uid://efng7n2os53p" path="res://scenes/game_over.tscn" id="3_pnatq"]
+[ext_resource type="PackedScene" uid="uid://bv4yo2i22xkdj" path="res://scenes/score.tscn" id="4_crv1m"]
+
+[node name="LevelGrid" type="Node2D"]
+script = ExtResource("1_gieju")
+
+[node name="Player" parent="." instance=ExtResource("2_agswa")]
+position = Vector2(64, 64)
+
+[node name="beans" type="Node2D" parent="."]
+
+[node name="Border" type="Line2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 0
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Score" parent="CanvasLayer" instance=ExtResource("4_crv1m")]
+
+[node name="GameOver" parent="CanvasLayer" instance=ExtResource("3_pnatq")]
+visible = false
