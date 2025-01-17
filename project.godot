@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="snake"
-run/main_scene="res://scenes/levelGrid.tscn"
+run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 
 window/size/viewport_width=960
 window/size/viewport_height=540
+window/size/mode=3
 window/size/resizable=false
 window/stretch/mode="canvas_items"
 
@@ -53,3 +54,4 @@ menu={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
+environment/defaults/default_clear_color=Color(0.156863, 0.298039, 0.32549, 1)

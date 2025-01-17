@@ -1,6 +1,11 @@
-[gd_scene load_steps=2 format=3 uid="uid://bv4yo2i22xkdj"]
+[gd_scene load_steps=4 format=3 uid="uid://bv4yo2i22xkdj"]
 
+[ext_resource type="FontFile" uid="uid://5yha73d16rgt" path="res://fonts/ARCADECLASSIC.TTF" id="1_8rsfx"]
 [ext_resource type="Script" path="res://scripts/score.gd" id="1_p4jxd"]
+
+[sub_resource type="Theme" id="Theme_jh4cs"]
+default_font = ExtResource("1_8rsfx")
+default_font_size = 22
 
 [node name="Score" type="Control"]
 layout_mode = 3
@@ -9,6 +14,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = SubResource("Theme_jh4cs")
 script = ExtResource("1_p4jxd")
 
 [node name="Label" type="Label" parent="."]

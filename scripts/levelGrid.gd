@@ -10,6 +10,7 @@ var astar_grid
 @onready var win_screen = $CanvasLayer/WinScreen
 @onready var camera = $Camera2D
 @onready var pause_menu: Control = $CanvasLayer/PauseMenu
+@onready var pickup_sfx: AudioStreamPlayer2D = $PickupSFX
 
 var highScore
 
@@ -20,8 +21,9 @@ var startingPosition = Vector2(0, 0)
 var gridOffset = Vector2(8, 8)
 
 var bean = preload("res://scenes/bean.tscn")
-var explosion = preload("res://scenes/explosion.tscn")
 var explosion2 = preload("res://scenes/explosion2.tscn")
+
+var rng = RandomNumberGenerator.new()
 
 var gameOver = false
 @export var gridWidth = 15
@@ -31,9 +33,9 @@ var maxScore = gridWidth * gridHeight
 var explosionAmount = 3
 
 #TODO
-#Levels (3 levels, target score to beat level, unlocked status, level select screen)
-#Additional concepts (roguelike? arcade? upgrades?)
-#different types of snakes(powers for each specific snake?)
+#make ui nicer
+#make main menu nicer
+#add music
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -98,6 +100,8 @@ func spawnBean():
 	beans.call_deferred("add_child", newBean)
 
 func beanPickedUp(location):
+	pickup_sfx.set_pitch_scale(rng.randf_range(1.0, 1.5))
+	pickup_sfx.play()
 	var newExplosion = explosion2.instantiate()
 	newExplosion.position = location
 	add_child(newExplosion)

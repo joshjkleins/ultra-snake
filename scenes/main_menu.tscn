@@ -1,6 +1,10 @@
-[gd_scene load_steps=2 format=3 uid="uid://df2pkc3w4q43a"]
+[gd_scene load_steps=4 format=3 uid="uid://df2pkc3w4q43a"]
 
 [ext_resource type="Script" path="res://scripts/MainMenu.gd" id="1_veq58"]
+[ext_resource type="FontFile" uid="uid://5yha73d16rgt" path="res://fonts/ARCADECLASSIC.TTF" id="2_ygv00"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_g43k8"]
+bg_color = Color(0.15814, 0.299402, 0.324565, 1)
 
 [node name="MainMenu" type="Control"]
 layout_mode = 3
@@ -10,6 +14,15 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_veq58")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_g43k8")
 
 [node name="PanelContainer" type="PanelContainer" parent="."]
 layout_mode = 1
@@ -27,31 +40,43 @@ grow_vertical = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer"]
 layout_mode = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 15
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 15
+theme_override_constants/margin_left = 45
+theme_override_constants/margin_top = 45
+theme_override_constants/margin_right = 45
+theme_override_constants/margin_bottom = 45
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer"]
 layout_mode = 2
 
 [node name="Label" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ygv00")
+theme_override_font_sizes/font_size = 28
 text = "Snake"
 horizontal_alignment = 1
 
-[node name="HighScore" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+[node name="HSeparator" type="HSeparator" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "High Score: 0"
-horizontal_alignment = 1
+theme_override_constants/separation = 12
 
 [node name="PlayButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ygv00")
+theme_override_font_sizes/font_size = 20
 text = "Play"
 
 [node name="QuitButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ygv00")
+theme_override_font_sizes/font_size = 20
 text = "Quit"
+
+[node name="HighScore" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("2_ygv00")
+theme_override_font_sizes/font_size = 20
+text = "High Score: 0"
+horizontal_alignment = 1
 
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/PlayButton" to="." method="_on_play_button_pressed"]
 [connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
