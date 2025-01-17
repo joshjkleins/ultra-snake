@@ -11,7 +11,7 @@
 [node name="LevelGrid" type="Node2D"]
 script = ExtResource("1_gieju")
 gridWidth = 5
-gridHeight = 5
+gridHeight = 6
 
 [node name="Player" parent="." instance=ExtResource("2_agswa")]
 position = Vector2(64, 64)

@@ -33,8 +33,6 @@ var maxScore = gridWidth * gridHeight
 var explosionAmount = 3
 
 #TODO
-#make ui nicer
-#make main menu nicer
 #add music
 
 # Called when the node enters the scene tree for the first time.
