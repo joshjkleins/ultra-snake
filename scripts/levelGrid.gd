@@ -11,6 +11,7 @@ var astar_grid
 @onready var camera = $Camera2D
 @onready var pause_menu: Control = $CanvasLayer/PauseMenu
 @onready var pickup_sfx: AudioStreamPlayer2D = $PickupSFX
+@onready var rewards: Control = $CanvasLayer/Rewards
 
 var highScore
 
@@ -28,9 +29,12 @@ var rng = RandomNumberGenerator.new()
 var gameOver = false
 @export var gridWidth = 15
 @export var gridHeight = 40
-var maxScore = gridWidth * gridHeight
+var maxScore = 4#gridWidth * gridHeight
 
 var explosionAmount = 3
+
+var secondBeanSpawnChance = 0.0
+var secondBeanSpawn = false
 
 #TODO
 #add music
@@ -96,9 +100,19 @@ func spawnBean():
 	
 	newBean.position = astar_grid.get_point_position(beanPosition)
 	beans.call_deferred("add_child", newBean)
+	
+	
+	if secondBeanSpawnChance > 0.0 and secondBeanSpawn == false:
+		var chance = rng.randf_range(0.0, 1.0)
+		if chance <= secondBeanSpawnChance:
+			secondBeanSpawn = true
+			spawnBean()
+	else:
+		secondBeanSpawn = false
+	
 
 func beanPickedUp(location):
-	pickup_sfx.set_pitch_scale(rng.randf_range(1.0, 1.5))
+	pickup_sfx.set_pitch_scale(rng.randf_range(0.8, 1.5))
 	pickup_sfx.play()
 	var newExplosion = explosion2.instantiate()
 	newExplosion.position = location
@@ -116,7 +130,8 @@ func beanPickedUp(location):
 func win():
 	#show win screen
 	player.move_timer.stop()
-	win_screen.visible = true
+	#win_screen.visible = true
+	rewards.visible = true
 
 
 func pauseGame():
@@ -129,7 +144,6 @@ func unpauseGame():
 		pause_menu.visible = false
 
 func showGameOver():
-	
 	save()
 	gameOver = true
 	game_over.visible = true
@@ -164,3 +178,11 @@ func load_data():
 
 func getHighScore():
 	load_data()
+
+func rewardChosen(reward, amount):
+	if reward == "Speed":
+		player.updateSpeed(amount)
+	elif reward == "Bean":
+		secondBeanSpawnChance += amount
+	rewards.visible = false
+	restart()

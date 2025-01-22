@@ -101,3 +101,8 @@ func clearData():
 	nextDirection = "right"
 	currentDirection = "right"
 	move_timer.start()
+
+func updateSpeed(amount):
+	var currentWaitTime = move_timer.get_wait_time()
+	waitTime = (currentWaitTime * (amount - 1.00)) * -1
+	move_timer.set_wait_time(waitTime)

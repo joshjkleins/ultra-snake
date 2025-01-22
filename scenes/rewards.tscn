@@ -1,0 +1,111 @@
+[gd_scene load_steps=6 format=3 uid="uid://co1swiykqoc8e"]
+
+[ext_resource type="FontFile" uid="uid://5yha73d16rgt" path="res://fonts/ARCADECLASSIC.TTF" id="1_ykb6i"]
+[ext_resource type="Script" path="res://scripts/rewards.gd" id="2_uyr6w"]
+
+[sub_resource type="Theme" id="Theme_ug7gk"]
+default_font = ExtResource("1_ykb6i")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_6helf"]
+bg_color = Color(0.156863, 0.298039, 0.32549, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tq1pv"]
+bg_color = Color(0.305882, 0.686275, 0.490196, 1)
+
+[node name="Rewards" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+theme = SubResource("Theme_ug7gk")
+script = ExtResource("2_uyr6w")
+
+[node name="Panel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -243.0
+offset_top = -82.5
+offset_right = 243.0
+offset_bottom = 82.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_6helf")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 28
+text = "Choose your reward."
+horizontal_alignment = 1
+
+[node name="HSeparator" type="HSeparator" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_tq1pv")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Increase speed by 5%"
+horizontal_alignment = 1
+
+[node name="Reward1" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Select"
+
+[node name="PanelContainer2" type="PanelContainer" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_styles/panel = SubResource("StyleBoxFlat_tq1pv")
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 15
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2/MarginContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 18
+text = "Increase speed by 5%"
+horizontal_alignment = 1
+
+[node name="Reward2" type="Button" parent="Panel/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Select"
+
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer/MarginContainer/VBoxContainer/Reward1" to="." method="_on_reward_1_pressed"]
+[connection signal="pressed" from="Panel/MarginContainer/VBoxContainer/HBoxContainer/PanelContainer2/MarginContainer/VBoxContainer/Reward2" to="." method="_on_reward_2_pressed"]
