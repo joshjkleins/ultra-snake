@@ -1,6 +1,6 @@
 extends Node2D
 
-var save_path = "res://variable.save"
+var save_path = "res://savegame.data"
 var astar_grid
 @onready var player = $Player
 @onready var game_over = $CanvasLayer/GameOver
@@ -29,15 +29,13 @@ var rng = RandomNumberGenerator.new()
 var gameOver = false
 @export var gridWidth = 15
 @export var gridHeight = 40
-var maxScore = 4#gridWidth * gridHeight
+var maxScore = gridWidth * gridHeight
 
 var explosionAmount = 3
 
 var secondBeanSpawnChance = 0.0
 var secondBeanSpawn = false
 
-#TODO
-#add music
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -118,7 +116,7 @@ func beanPickedUp(location):
 	newExplosion.position = location
 	add_child(newExplosion)
 	#newExplosion.emitting = true
-	explosionAmount += 3
+	explosionAmount += 1
 	newExplosion.explode(explosionAmount)
 	player.growSnake()
 	score.addScore()
@@ -128,9 +126,8 @@ func beanPickedUp(location):
 		spawnBean()
 
 func win():
-	#show win screen
 	player.move_timer.stop()
-	#win_screen.visible = true
+	#rewards.rollRewards()
 	rewards.visible = true
 
 
@@ -161,19 +158,24 @@ func restart():
 	unpauseGame()
 
 func save():
-	if score.score > highScore:
+	if highScore == null:
 		var file = FileAccess.open(save_path, FileAccess.WRITE)
-		var saveData = {
-			"Score": score.score
-		}
-		file.store_var(saveData)
+		file.store_var(score.score)
 		file.close()
+	else:
+		if score.score > highScore or highScore == null:
+			var file = FileAccess.open(save_path, FileAccess.WRITE)
+			var saveData = {
+				"Score": score.score
+			}
+			file.store_var(saveData)
+			file.close()
 
 func load_data():
 	if FileAccess.file_exists(save_path):
 		var file = FileAccess.open(save_path, FileAccess.READ)
 		var saveData = file.get_var()
-		highScore = saveData.Score
+		highScore = saveData
 		file.close()
 
 func getHighScore():

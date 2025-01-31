@@ -1,6 +1,6 @@
 extends Control
 
-var save_path = "res://variable.save"
+var save_path = "res://savegame.data"
 @onready var high_score: Label = $PanelContainer/MarginContainer/VBoxContainer/HighScore
 
 # Called when the node enters the scene tree for the first time.
@@ -22,7 +22,7 @@ func load_data():
 		var file = FileAccess.open(save_path, FileAccess.READ)
 		saveData = file.get_var()
 		file.close()
+	if saveData:
+		high_score.text = "High Score: " + str(saveData)
 	else:
-		print('no saved data found')
-	print(saveData)
-	high_score.text = "High Score: " + str(saveData.Score)
+		high_score.text = "High Score: 0"
